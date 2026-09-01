@@ -4,16 +4,19 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-78%20passing-brightgreen.svg)](#testing)
+[![Tests](https://img.shields.io/badge/tests-88%20passing-brightgreen.svg)](#testing)
 [![GitHub Stars](https://img.shields.io/github/stars/SaadEddine-ware/uigen.svg?style=social)](https://github.com/SaadEddine-ware/uigen)
 
 ---
 
 ## Demo
 
-### Before: 100+ lines of HTML
+### The Problem
+
+Backend devs need to build UIs but hate writing HTML. A simple table takes 35+ lines:
 
 ```html
+<!-- 35+ lines of HTML for a basic table -->
 <div class="bg-white rounded-lg shadow-md p-6">
   <h2 class="text-2xl font-semibold text-gray-900 mb-4">Users</h2>
   <table class="w-full">
@@ -43,7 +46,9 @@
 </div>
 ```
 
-### After: 15 lines of Python
+### The Solution
+
+Write 15 lines of Python instead:
 
 ```python
 from uigen import App, Model, ui
@@ -69,13 +74,24 @@ app = App(title="My App", pages=[page])
 app.render("lnative", output="./dist")
 ```
 
-**Same result. 85% less code.**
+### The Result
 
----
+Same output. **57% less code.**
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Metric              HTML         Python (uigen)       │
+├─────────────────────────────────────────────────────────┤
+│  Lines of code       35+          15                   │
+│  Characters          ~1,500       ~500                 │
+│  Time to write       10-15 min    2-3 min              │
+│  Reduction           —            57%                  │
+└─────────────────────────────────────────────────────────┘
+```
 
 <!-- [![Demo](https://github.com/SaadEddine-ware/uigen/raw/main/docs/demo.gif)](https://github.com/SaadEddine-ware/uigen/raw/main/docs/demo.gif) -->
 
-*GIF demo coming soon — showing Python code generating a full admin dashboard*
+*Run `python examples/demo.py` to see the full transformation*
 
 ---
 
@@ -178,6 +194,54 @@ uigen generate --renderer lnative --output ./dist
 ### 4. Preview
 
 Open `dist/index.html` in your browser.
+
+---
+
+## Themes
+
+uigen includes a theme customization system with built-in themes:
+
+```python
+from uigen import App, ui, get_theme, list_themes
+
+# List available themes
+print(list_themes())  # ['default', 'dark', 'emerald', 'purple', 'rose']
+
+# Use a theme
+app = App(title="My App", pages=[page], theme="emerald")
+app.render("lnative", output="./dist")
+```
+
+### Built-in Themes
+
+| Theme | Primary Color | Use Case |
+|-------|--------------|----------|
+| `default` | Blue | General purpose |
+| `dark` | Blue | Dark mode interfaces |
+| `emerald` | Green | Success, nature, finance |
+| `purple` | Purple | Creative, luxury |
+| `rose` | Rose | Fashion, beauty |
+
+### Custom Themes
+
+```python
+from uigen import Theme, register_theme, ColorPalette
+
+# Create a custom theme
+custom = Theme(
+    name="my-brand",
+    colors=ColorPalette(
+        primary="indigo",
+        primary_500="#6366f1",
+        primary_600="#4f46e5",
+        primary_700="#4338ca",
+    ),
+)
+
+# Register and use it
+register_theme("my-brand", custom)
+app = App(title="My App", pages=[page], theme="my-brand")
+```
 
 ---
 
@@ -329,12 +393,13 @@ pytest tests/test_core.py -v
 - [x] `lflask` renderer (Flask)
 - [x] `ldjango` renderer (Django)
 - [x] CLI support
-- [x] Tests (78 passing)
+- [x] Theme customization (5 built-in themes)
+- [x] C extension for HTML escaping
+- [x] Tests (88 passing)
 - [x] Examples (dashboard, perfume store)
-- [ ] C extension for performance
-- [ ] Theme customization
-- [ ] Component library expansion
-- [ ] Demo GIF
+- [ ] More components (charts, calendars, etc.)
+- [ ] VS Code extension
+- [ ] Demo GIF recording
 
 ---
 

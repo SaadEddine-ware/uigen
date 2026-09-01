@@ -17,10 +17,12 @@ class App:
         title: str = "My App",
         models: list[type[Model]] | None = None,
         pages: list[Page] | None = None,
+        theme: str | None = None,
     ) -> None:
         self.title = title
         self.models = models or []
         self.pages = pages or []
+        self.theme = theme
         self._renderer: Any = None
 
     def add_page(self, page: Page) -> App:
@@ -187,7 +189,7 @@ root.render(
         """Import and instantiate a renderer by name."""
         if name == "lnative":
             from uigen.renderers.lnative import LNativeRenderer
-            return LNativeRenderer()
+            return LNativeRenderer(theme=self.theme)
         elif name == "lreact":
             from uigen.renderers.lreact import LReactRenderer
             return LReactRenderer()
