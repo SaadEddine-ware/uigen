@@ -43,6 +43,7 @@ htmlcov/
 dist/
 output/
 generated/
+react-app/
 
 # OS
 .DS_Store

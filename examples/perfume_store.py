@@ -325,10 +325,22 @@ app = App(
 
 
 if __name__ == "__main__":
-    output = app.render("lnative", output="./dist")
-    print(f"Perfume store generated at {output}/")
-    print("Files:")
-    print("  - index.html  (Home)")
-    print("  - page_1.html (Shop)")
-    print("  - page_2.html (About)")
-    print("\nOpen index.html in your browser to view the store!")
+    import sys
+
+    renderer = sys.argv[1] if len(sys.argv) > 1 else "lnative"
+
+    if renderer == "lreact":
+        output = app.render("lreact", output="./react-app")
+        print(f"React app generated at {output}/")
+        print("To run:")
+        print("  cd react-app")
+        print("  npm install")
+        print("  npm start")
+    else:
+        output = app.render("lnative", output="./dist")
+        print(f"Perfume store generated at {output}/")
+        print("Files:")
+        print("  - index.html  (Home)")
+        print("  - page_1.html (Shop)")
+        print("  - page_2.html (About)")
+        print("\nOpen index.html in your browser to view the store!")
