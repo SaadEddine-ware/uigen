@@ -336,6 +336,20 @@ if __name__ == "__main__":
         print("  cd react-app")
         print("  npm install")
         print("  npm start")
+    elif renderer == "lflask":
+        output = app.render("lflask", output="./flask-app")
+        print(f"Flask app generated at {output}/")
+        print("To run:")
+        print("  cd flask-app")
+        print("  pip install -r requirements.txt")
+        print("  python app.py")
+    elif renderer == "ldjango":
+        output = app.render("ldjango", output="./django-app")
+        print(f"Django app generated at {output}/")
+        print("To run:")
+        print("  cd django-app")
+        print("  pip install -r requirements.txt")
+        print("  python manage.py runserver")
     else:
         output = app.render("lnative", output="./dist")
         print(f"Perfume store generated at {output}/")

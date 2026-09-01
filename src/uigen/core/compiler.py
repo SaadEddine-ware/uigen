@@ -44,6 +44,10 @@ class App:
 
         if renderer_name == "lreact":
             return self._render_react(renderer, output_path)
+        elif renderer_name == "lflask":
+            return self._render_flask(renderer, output_path)
+        elif renderer_name == "ldjango":
+            return self._render_django(renderer, output_path)
         else:
             return self._render_native(renderer, output_path)
 
@@ -98,6 +102,83 @@ root.render(
     <App />
   </React.StrictMode>
 );"""
+        )
+
+        return output_path
+
+    def _render_flask(self, renderer: Any, output_path: Path) -> Path:
+        """Render pages as a Flask project."""
+        templates_dir = output_path / "templates" / "pages"
+        static_dir = output_path / "static"
+        templates_dir.mkdir(parents=True, exist_ok=True)
+        static_dir.mkdir(parents=True, exist_ok=True)
+
+        route_names = []
+        for i, page in enumerate(self.pages):
+            page_title = page.title or f"Page{i}"
+            route_name = renderer._to_snake_case(page_title)
+            route_names.append(route_name)
+
+            content = renderer.render_page(page, title=self.title)
+            (templates_dir / f"{route_name}.html").write_text(content)
+
+        # Generate base.html
+        (output_path / "templates" / "base.html").write_text(
+            renderer.generate_base_html(self.title)
+        )
+
+        # Generate app.py
+        (output_path / "app.py").write_text(
+            renderer.generate_app_py(self.title, route_names)
+        )
+
+        # Generate requirements.txt
+        (output_path / "requirements.txt").write_text(
+            renderer.generate_requirements()
+        )
+
+        return output_path
+
+    def _render_django(self, renderer: Any, output_path: Path) -> Path:
+        """Render pages as a Django project."""
+        project_name = renderer._to_snake_case(self.title)
+        templates_dir = output_path / "templates" / "pages"
+        app_dir = output_path / project_name
+        templates_dir.mkdir(parents=True, exist_ok=True)
+        app_dir.mkdir(parents=True, exist_ok=True)
+
+        route_names = []
+        for i, page in enumerate(self.pages):
+            page_title = page.title or f"Page{i}"
+            route_name = renderer._to_snake_case(page_title)
+            route_names.append(route_name)
+
+            content = renderer.render_page(page, title=self.title)
+            (templates_dir / f"{route_name}.html").write_text(content)
+
+        # Generate base.html
+        (output_path / "templates" / "base.html").write_text(
+            renderer.generate_base_html(self.title)
+        )
+
+        # Generate views.py
+        (app_dir / "views.py").write_text(
+            renderer.generate_views_py(self.title, route_names)
+        )
+
+        # Generate urls.py
+        (app_dir / "urls.py").write_text(
+            renderer.generate_urls_py(route_names)
+        )
+
+        # Generate settings.py
+        (output_path / "settings.py").write_text(
+            renderer.generate_settings_py(self.title)
+        )
+
+        # Generate requirements.txt
+        (output_path / "requirements.txt").write_text(
+            renderer.generate_requirements()
         )
 
         return output_path

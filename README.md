@@ -4,7 +4,7 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-45%20passing-brightgreen.svg)](#testing)
+[![Tests](https://img.shields.io/badge/tests-78%20passing-brightgreen.svg)](#testing)
 [![GitHub Stars](https://img.shields.io/github/stars/SaadEddine-ware/uigen.svg?style=social)](https://github.com/SaadEddine-ware/uigen)
 
 ---
@@ -113,8 +113,8 @@ Write Python functions that generate clean, production-ready HTML, React, Flask,
 |----------|--------|--------|----------|
 | `lnative` | Ready | Static HTML/CSS/JS | Landing pages, admin panels |
 | `lreact` | Ready | React components | Complex SPAs |
-| `lflask` | Coming Soon | Flask/Jinja2 templates | Python web apps |
-| `ldjango` | Coming Soon | Django templates | Enterprise apps |
+| `lflask` | Ready | Flask/Jinja2 templates | Python web apps |
+| `ldjango` | Ready | Django templates | Enterprise apps |
 
 ---
 
@@ -290,8 +290,18 @@ A complete perfume store with:
 
 ```bash
 cd examples
-python perfume_store.py
-open dist/index.html
+
+# Generate static HTML
+python perfume_store.py lnative
+
+# Generate React app
+python perfume_store.py lreact
+
+# Generate Flask app
+python perfume_store.py lflask
+
+# Generate Django app
+python perfume_store.py ldjango
 ```
 
 ---
@@ -316,11 +326,11 @@ pytest tests/test_core.py -v
 - [x] Core API and Model system
 - [x] `lnative` renderer (HTML/CSS/JS)
 - [x] `lreact` renderer (React)
+- [x] `lflask` renderer (Flask)
+- [x] `ldjango` renderer (Django)
 - [x] CLI support
-- [x] Tests (45 passing)
+- [x] Tests (78 passing)
 - [x] Examples (dashboard, perfume store)
-- [ ] `lflask` renderer (Flask)
-- [ ] `ldjango` renderer (Django)
 - [ ] C extension for performance
 - [ ] Theme customization
 - [ ] Component library expansion

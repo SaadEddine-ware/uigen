@@ -44,6 +44,8 @@ dist/
 output/
 generated/
 react-app/
+flask-app/
+django-app/
 
 # OS
 .DS_Store
