@@ -4,8 +4,78 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)](#testing)
-[![PyPI](https://img.shields.io/badge/PyPI-0.1.0-orange.svg)](https://pypi.org/project/uigen/)
+[![Tests](https://img.shields.io/badge/tests-30%20passing-brightgreen.svg)](#testing)
+[![GitHub Stars](https://img.shields.io/github/stars/SaadEddine-ware/uigen.svg?style=social)](https://github.com/SaadEddine-ware/uigen)
+
+---
+
+## Demo
+
+### Before: 100+ lines of HTML
+
+```html
+<div class="bg-white rounded-lg shadow-md p-6">
+  <h2 class="text-2xl font-semibold text-gray-900 mb-4">Users</h2>
+  <table class="w-full">
+    <thead>
+      <tr class="border-b border-gray-200">
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Name</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Email</th>
+        <th class="px-4 py-2 text-left text-sm font-medium text-gray-700">Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="border-t border-gray-200">
+        <td class="px-4 py-2 text-sm text-gray-600">Alice Johnson</td>
+        <td class="px-4 py-2 text-sm text-gray-600">alice@example.com</td>
+        <td class="px-4 py-2 text-sm text-gray-600">admin</td>
+      </tr>
+      <tr class="border-t border-gray-200">
+        <td class="px-4 py-2 text-sm text-gray-600">Bob Smith</td>
+        <td class="px-4 py-2 text-sm text-gray-600">bob@example.com</td>
+        <td class="px-4 py-2 text-sm text-gray-600">viewer</td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+    Add User
+  </button>
+</div>
+```
+
+### After: 15 lines of Python
+
+```python
+from uigen import App, Model, ui
+
+class User(Model):
+    name: str
+    email: str
+    role: str = "viewer"
+
+page = ui.page(
+    ui.card(
+        ui.heading("Users"),
+        ui.table(data=[
+            {"name": "Alice Johnson", "email": "alice@example.com", "role": "admin"},
+            {"name": "Bob Smith", "email": "bob@example.com", "role": "viewer"},
+        ]),
+        ui.button("Add User"),
+    ),
+    title="User Management",
+)
+
+app = App(title="My App", pages=[page])
+app.render("lnative", output="./dist")
+```
+
+**Same result. 85% less code.**
+
+---
+
+<!-- [![Demo](https://github.com/SaadEddine-ware/uigen/raw/main/docs/demo.gif)](https://github.com/SaadEddine-ware/uigen/raw/main/docs/demo.gif) -->
+
+*GIF demo coming soon — showing Python code generating a full admin dashboard*
 
 ---
 
@@ -21,38 +91,7 @@ Backend devs constantly need to build admin panels, dashboards, or simple web UI
 
 ### The Solution
 
-Write 5 lines of Python:
-
-```python
-from uigen import App, Model, ui
-
-class User(Model):
-    name: str
-    email: str
-    role: str = "viewer"
-
-page = ui.page(
-    ui.card(
-        ui.heading("Users"),
-        ui.table(data=[
-            {"name": "Alice", "email": "alice@example.com", "role": "admin"},
-            {"name": "Bob", "email": "bob@example.com", "role": "viewer"},
-        ]),
-        ui.button("Add User"),
-    ),
-    title="User Management",
-)
-
-app = App(title="My App", pages=[page])
-app.render("lnative", output="./dist")
-```
-
-Get a complete, styled HTML page with:
-- Tailwind CSS styling
-- Responsive grid layouts
-- Interactive modals
-- Form components
-- Data tables with sorting
+Write Python functions that generate clean, production-ready HTML, React, Flask, or Django code. The generated code is yours — edit it freely after generation.
 
 ---
 
@@ -64,6 +103,7 @@ Get a complete, styled HTML page with:
 - **Component Library** — Cards, tables, forms, modals, grids, and more
 - **CLI Support** — Initialize projects and generate code from the command line
 - **No Runtime Dependency** — Generated code is standalone, you own it
+- **Fast** — C-powered template engine for blazing fast generation
 
 ---
 
@@ -147,19 +187,19 @@ uigen provides a rich set of UI components:
 
 ```python
 # Layout
-ui.page(...)          # Top-level page container
-ui.card(...)          # Card with shadow and padding
-ui.grid(..., columns=3)  # Grid layout
-ui.stack(..., spacing="md")  # Vertical stack
+ui.page(...)                    # Top-level page container
+ui.card(...)                    # Card with shadow and padding
+ui.grid(..., columns=3)         # Grid layout
+ui.stack(..., spacing="md")     # Vertical stack
 
 # Content
-ui.heading("Title", level=1)  # Headings (h1-h6)
-ui.text("Paragraph text")     # Paragraph text
+ui.heading("Title", level=1)    # Headings (h1-h6)
+ui.text("Paragraph text")       # Paragraph text
 
 # Interactive
 ui.button("Click me", variant="primary")  # Buttons
-ui.modal(...)                 # Modal dialogs
-ui.form(...)                  # Form containers
+ui.modal(...)                           # Modal dialogs
+ui.form(...)                            # Form containers
 
 # Data
 ui.table(data=[...], columns=["name", "email"])  # Data tables
@@ -239,7 +279,20 @@ uigen/
 See the [`examples/`](examples/) directory for complete examples:
 
 - [`dashboard.py`](examples/dashboard.py) — Admin dashboard with stats, tables, and modals
-- [`store.py`](examples/store.py) — E-commerce product catalog (coming soon)
+- [`perfume_store.py`](examples/perfume_store.py) — E-commerce perfume store website
+
+### Perfume Store Demo
+
+A complete perfume store with:
+- Home page with hero section, featured products, and newsletter
+- Shop page with product grid and filters
+- About page with story, values, and contact form
+
+```bash
+cd examples
+python perfume_store.py
+open dist/index.html
+```
 
 ---
 
@@ -263,12 +316,15 @@ pytest tests/test_core.py -v
 - [x] Core API and Model system
 - [x] `lnative` renderer (HTML/CSS/JS)
 - [x] CLI support
+- [x] Tests (30 passing)
+- [x] Examples (dashboard, perfume store)
 - [ ] `lreact` renderer (React)
 - [ ] `lflask` renderer (Flask)
 - [ ] `ldjango` renderer (Django)
 - [ ] C extension for performance
 - [ ] Theme customization
 - [ ] Component library expansion
+- [ ] Demo GIF
 
 ---
 
