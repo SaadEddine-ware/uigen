@@ -125,12 +125,138 @@ Write Python functions that generate clean, production-ready HTML, React, Flask,
 
 ## Renderers
 
-| Renderer | Status | Output | Best For |
-|----------|--------|--------|----------|
-| `lnative` | Ready | Static HTML/CSS/JS | Landing pages, admin panels |
-| `lreact` | Ready | React components | Complex SPAs |
-| `lflask` | Ready | Flask/Jinja2 templates | Python web apps |
-| `ldjango` | Ready | Django templates | Enterprise apps |
+| Renderer | Output | Best For |
+|----------|--------|----------|
+| `lnative` | Static HTML/CSS/JS | Landing pages, admin panels |
+| `lreact` | React components | Complex SPAs |
+| `lflask` | Flask/Jinja2 templates | Python web apps |
+| `ldjango` | Django templates | Enterprise apps |
+
+---
+
+## Using Renderers
+
+### lnative — Static HTML
+
+Generates a standalone HTML file with Tailwind CSS. No build step needed.
+
+```python
+from uigen import App, ui
+
+page = ui.page(
+    ui.card(ui.heading("Hello")),
+    title="My Page"
+)
+
+app = App(title="My App", pages=[page])
+app.render("lnative", output="./dist")
+```
+
+**Output:**
+```
+dist/
+└── index.html    # Open in browser, works offline
+```
+
+### lreact — React Components
+
+Generates a React project with components, package.json, and index.html.
+
+```python
+app.render("lreact", output="./my-react-app")
+```
+
+**Output:**
+```
+my-react-app/
+├── package.json
+├── index.html
+└── src/
+    └── components/
+        ├── App.jsx
+        └── MyPage.jsx
+```
+
+**Setup:**
+```bash
+cd my-react-app
+npm install
+npm start
+```
+
+### lflask — Flask Templates
+
+Generates a Flask app with Jinja2 templates and route stubs.
+
+```python
+app.render("lflask", output="./my-flask-app")
+```
+
+**Output:**
+```
+my-flask-app/
+├── app.py              # Flask app with routes
+├── requirements.txt
+└── templates/
+    ├── base.html
+    └── my_page.html
+```
+
+**Setup:**
+```bash
+cd my-flask-app
+pip install -r requirements.txt
+python app.py
+```
+
+### ldjango — Django Templates
+
+Generates a Django app with templates, views, and URL configuration.
+
+```python
+app.render("ldjango", output="./my-django-app")
+```
+
+**Output:**
+```
+my-django-app/
+├── manage.py
+├── requirements.txt
+├── my_django_app/
+│   ├── settings.py
+│   ├── urls.py
+│   └── views.py
+└── templates/
+    ├── base.html
+    └── my_page.html
+```
+
+**Setup:**
+```bash
+cd my-django-app
+pip install -r requirements.txt
+python manage.py runserver
+```
+
+---
+
+### CLI Usage
+
+You can also generate from the command line:
+
+```bash
+# Generate HTML
+uigen generate --renderer lnative --output ./dist
+
+# Generate React
+uigen generate --renderer lreact --output ./my-react-app
+
+# Generate Flask
+uigen generate --renderer lflask --output ./my-flask-app
+
+# Generate Django
+uigen generate --renderer ldjango --output ./my-django-app
+```
 
 ---
 
