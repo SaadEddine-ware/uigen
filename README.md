@@ -89,7 +89,7 @@ Same output. **57% less code.**
 └─────────────────────────────────────────────────────────┘
 ```
 
-<!-- [![Demo](https://github.com/SaadEddine-ware/uigen/raw/main/docs/demo.gif)](https://github.com/SaadEddine-ware/uigen/raw/main/docs/demo.gif) -->
+[![Demo](https://github.com/SaadEddine-ware/uigen/raw/main/docs/demo.gif)](https://github.com/SaadEddine-ware/uigen/raw/main/docs/demo.gif)
 
 *Run `python examples/demo.py` to see the full transformation*
 
